@@ -1,4 +1,4 @@
-# Class 13 SQL Query Test App
+# SQL Query Test App
 
 # Load required packages
 library(shiny)
@@ -35,7 +35,7 @@ server <- function(input, output) {
         # URL Encode the query
         formatQuery <- URLencode(input$query, repeated = TRUE)
         # Build URL for GET request
-        url <- paste0("https://data.wprdc.org/api/action/datastore_search_sql?sql=", formatQuery)
+        url <- paste0("https://data.wprdc.org/api/action/datastore_search_sql?sql=", formatQuery, "%20LIMIT%201000")
         # Run Get Request
         g <- GET(url)
         # Check if there's an error
