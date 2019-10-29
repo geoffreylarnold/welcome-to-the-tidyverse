@@ -14,4 +14,4 @@ Looking for an effective way to learn R? This one day course will teach you a wo
 * Extract data from Databases with DBI
 * Document your work reproducibly with R Markdown
 
-Along the way, you will practice using R's syntax, gaining comfort with R through many exercises and examples. Bring your laptop! The workshop will be taught by Garrett Grolemund, an award winning instructor and the co-author of R for Data Science.
+Along the way, you will practice using R's syntax, gaining comfort with R through many exercises and examples.
