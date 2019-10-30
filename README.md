@@ -13,5 +13,6 @@ Looking for an effective way to learn R? This one day course will teach you a wo
 * Fit models with base R
 * Extract data from Databases with DBI
 * Document your work reproducibly with R Markdown
+* Track changes in your code using Git and R Projects
 
 Along the way, you will practice using R's syntax, gaining comfort with R through many exercises and examples.
