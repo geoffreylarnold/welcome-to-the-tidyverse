@@ -25,7 +25,7 @@ con <- dbConnect(odbc::odbc(), driver = "{SQL Server Native Client 11.0}", serve
 You should always store credentials and keys in a file as enviornmental variables
 To create a environ file type `usethis::edit_r_environ("project")`.
 
-# Build a SQL Query and Send it
+# Build a SQL Query and load it
 
 ```{r sql}
 
@@ -35,7 +35,38 @@ FROM DB.dbo.Table"
 
 # Get Query
 table <- dbGetQuery(con, sql)
+```
 
+## Disconnect from Database
+
+```{r disconnect, echo=FALSE}
+dbDisconnect(con)
+```
+
+# Oracle Connection
+
+This connection method requires rJava, follow these [instructions](9https://cimentadaj.github.io/blog/2018-05-25-installing-rjava-on-windows-10/installing-rjava-on-windows-10/)
+
+```{r}
+library(RJDBC)
+
+# Build the driver using JDBC
+jdbcDriver <- JDBC(driverClass="oracle.jdbc.OracleDriver", classPath="ojdbc6.jar")
+
+# Establish the connection
+oracle <- dbConnect(jdbcDriver, "jdbc:oracle:thin:@//samedatabase:1522/schema", uid, pwd)
+```
+
+# Build a SQL Query and load it
+
+```{r sql}
+
+# Build SQL Query
+sql <- "SELECT *
+FROM OracleDB.dbo.Table"
+
+# Get Query
+table <- dbGetQuery(oracle, sql)
 ```
 
 ## Disconnect from Database
