@@ -1,0 +1,45 @@
+---
+title: "DBI Example"
+output: html_document
+---
+
+Note: This RMarkdown script will not knit because the connection settings are fake. It is a template you can use for other things.
+
+```{r setup}
+knitr::opts_chunk$set(echo = TRUE)
+# DBI Example
+library(DBI)
+
+# Load Credentials file
+readRenviron(".Renviron")
+
+uid <- Sys.getenv("uid")
+pwd <- Sys.getenv("pwd")
+
+# DB Connection String
+con <- dbConnect(odbc::odbc(), driver = "{SQL Server Native Client 11.0}", server = "somedatabase", uid = uid, pwd = pwd, MARS_Connection = "Yes")
+```
+
+# Credential Files
+
+You should always store credentials and keys in a file as enviornmental variables
+To create a environ file type `usethis::edit_r_environ("project")`.
+
+# Build a SQL Query and Send it
+
+```{r sql}
+
+# Build SQL Query
+sql <- "SELECT *
+FROM DB.dbo.Table"
+
+# Get Query
+table <- dbGetQuery(con, sql)
+
+```
+
+## Disconnect from Database
+
+```{r disconnect, echo=FALSE}
+dbDisconnect(con)
+```
