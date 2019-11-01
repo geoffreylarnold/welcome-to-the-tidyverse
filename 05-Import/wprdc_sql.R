@@ -7,9 +7,11 @@ library(shinythemes)
 library(dplyr)
 library(jsonlite)
 library(DT)
+library(shinyjs)
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(theme = shinytheme("readable"),
+    useShinyjs(),
     # Set text area to width of page
     tags$style("#query {width: calc(100vw - 30px)}"),
 
@@ -32,6 +34,7 @@ ui <- fluidPage(theme = shinytheme("readable"),
 # Define server logic required to draw a histogram
 server <- function(input, output) {
     getResults <- eventReactive(input$run, {
+        disable("run")
         # URL Encode the query
         formatQuery <- URLencode(input$query, repeated = TRUE)
         # Build URL for GET request
@@ -46,7 +49,7 @@ server <- function(input, output) {
             # Retrieve and display the results if successful
             results <- fromJSON(content(g, "text"))$result$records
         }
-        
+        enable("run")
         return(results)
     })
     # Display results in Table
