@@ -1,14 +1,15 @@
 ---
-title: "Garrett"
+title: "Maggie Today is 'r sys.date()'"
+output: html_notebook
 ---
 
-```{r setup, include=FALSE}
+```{r setup, echo=FALSE}
 library(tidyverse)
 library(babynames)
 
 name_data <- 
   babynames %>% 
-  filter(name == "Garrett") %>% 
+  filter(name == "Maggie") %>% 
   mutate(sex = case_when(sex == "M" ~ "Male", 
                          sex == "F" ~ "Female"))
 
@@ -41,8 +42,8 @@ There have been **TODO** children named Garrett. The name Garrett was most popul
 name_data %>% 
   ggplot() +
     geom_ribbon(mapping = aes(x = year, ymax = prop, fill = sex), ymin = 0, alpha = 0.5) +
-    labs(title = "Popularity of the name Garrett", 
-         subtitle = "The proportion of boys and girls named Garrett, 1880-2017", 
+    labs(title = "Popularity of the name Maggie, today is 'r sys.date()'", 
+         subtitle = "The proportion of boys and girls named Maggie, 1880-2017", 
          caption = "Data from the US Social Security Administration",
          y = "proportion") +
     theme_bw()

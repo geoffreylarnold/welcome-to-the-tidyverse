@@ -1,13 +1,20 @@
 ---
 title: "`r params$name`"
-params: 
-  name: "Garrett"
+params:
+  name: Garrett
+output:
+  html_document:
+    df_print: paged
 ---
+
 
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(babynames)
 library(glue)
+
+
+
 
 name_data <- 
   babynames %>% 

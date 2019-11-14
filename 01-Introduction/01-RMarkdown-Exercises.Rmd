@@ -1,6 +1,9 @@
 ---
 title: "R Markdown"
 ---
+```{r MaggieTidy}
+library(tidyverse)
+```
 
 This is an R Markdown file. It contains plain text interspersed with grey chunks of code. You can use the file to take notes _and_ run code. For example, you can write your name on the line below. Try it: 
 
@@ -81,5 +84,5 @@ Here is one last code chunk that we will use in the next exercise. If you uncomm
 
 
 ```{r}
-# ggplot(data = diamonds) + geom_point(aes(x = carat, y = price))
+ggplot(data = diamonds) + geom_point(aes(x = carat, y = price))
 ```
