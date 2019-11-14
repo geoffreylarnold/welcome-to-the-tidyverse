@@ -5,6 +5,8 @@ output: html_document
 
 Note: This RMarkdown script will not knit because the connection settings are fake. It is a template you can use for other things.
 
+![](https://upload.wikimedia.org/wikipedia/commons/6/66/An_up-close_picture_of_a_curious_male_domestic_shorthair_tabby_cat.jpg)
+
 ```{r setup}
 knitr::opts_chunk$set(echo = TRUE)
 # DBI Example
@@ -13,12 +15,12 @@ library(DBI)
 # Load Credentials file
 readRenviron(".Renviron")
 
-uid <- Sys.getenv("uid")
+uid <e", uid = uid, pwd = pwd, MARS_Connection = "Yes")
+```- Sys.getenv("uid")
 pwd <- Sys.getenv("pwd")
 
 # DB Connection String
-con <- dbConnect(odbc::odbc(), driver = "{SQL Server Native Client 11.0}", server = "somedatabase", uid = uid, pwd = pwd, MARS_Connection = "Yes")
-```
+con <- dbConnect(odbc::odbc(), driver = "{SQL Server Native Client 11.0}", server = "somedatabas
 
 # Credential Files
 
@@ -72,5 +74,5 @@ table <- dbGetQuery(oracle, sql)
 ## Disconnect from Database
 
 ```{r disconnect, echo=FALSE}
-dbDisconnect(con)
+dbDisconnect(oracle)
 ```
