@@ -15,12 +15,14 @@ library(DBI)
 # Load Credentials file
 readRenviron(".Renviron")
 
-uid <e", uid = uid, pwd = pwd, MARS_Connection = "Yes")
-```- Sys.getenv("uid")
+uid <- Sys.getenv("uid")
 pwd <- Sys.getenv("pwd")
+server <- Sys.getenv("server")
+db <- Sys.getenv("db")
 
 # DB Connection String
-con <- dbConnect(odbc::odbc(), driver = "{SQL Server Native Client 11.0}", server = "somedatabas
+con <- dbConnect(odbc::odbc(), driver = "{ODBC Driver 17 for SQL Server}", server = server, database = db, UID = uid, pwd = pwd, Trusted_Connection= "yes")
+```
 
 # Credential Files
 
