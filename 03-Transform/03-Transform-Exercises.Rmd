@@ -26,7 +26,6 @@ pollution <- tribble(
 
 Set the working directory to `03-Transform`. Then import the `babynames.csv` data set, which is in the `03-Transform` folder, as `babynames`. Then copy the import code into the code chunk below. Does it run?
 
-```{r}
 
 ```
 
@@ -41,7 +40,7 @@ babynames
 Alter the code to select just the `n` column:
 
 ```{r}
-select(babynames, name, prop)
+select(babynames, name, prop, n)
 ```
 
 ## Quiz
@@ -75,7 +74,8 @@ Use Boolean operators to return only the rows that contain:
 * Names that are one of Acura, Lexus, or Yugo
 
 ```{r}
-
+filter(babynames, sex == "M", name == "Sue")
+filter(babynames, (n %in% c(5,6)) & year == 1880)
 ```
 
 ## Help Me
@@ -84,7 +84,9 @@ What is the smallest value of n?
 What is the largest?
 
 ```{r}
+arrange(babynames, n, prop)
 
+arrange(babynames, desc(n))
 ```
 
 ## Your Turn 5
@@ -96,7 +98,10 @@ Use `%>%` to write a sequence of functions that:
 3. Arranges the results so that the most popular names are near the top.
 
 ```{r}
-
+babynames %>% 
+  filter(sex == "F", year == 2017) %>% 
+  select(name, n) %>% 
+  arrange(desc(n))
 ```
 
 ## Your Turn 6 - Exam
@@ -106,7 +111,11 @@ Use `%>%` to write a sequence of functions that:
 3. Plot the results as a line graph with `year` on the x axis and `prop` on the y axis
 
 ```{r}
-
+ME <- babynames %>% 
+  filter(name == "Maggie", sex == "F") %>% 
+  select(year, prop)
+ggplot(ME) +
+  geom_line(aes(year, prop))
 ```
 
 ## Your Turn 7
@@ -131,10 +140,27 @@ Use `group_by()`, `summarise()`, and `arrange()` to display the ten most popular
 *(Hint: Be sure to remove each `_` before running the code)*
 
 ```{r}
+
+summarise(babynames, total = sum(n), max = max(n))
+
+babynames %>% 
+  filter(name == "Khaleesi") %>% 
+  summarise(total = sum(n), first = min(year)) 
+
 babynames %>%
   _______(name, sex) %>% 
   _______(total = _____(n)) %>% 
   _______(desc(_____))
+  
+babynames %>%
+     group_by(name, sex) %>% 
+     summarise(total = sum(n)) %>% 
+     arrange(desc(total)) %>% 
+     ungroup() %>% 
+     slice(1:10) %>% 
+     ggplot() +
+      geom_col(aes())
+     
 ```
 
 ## Your Turn 9
@@ -142,7 +168,16 @@ babynames %>%
 Use `group_by()` to calculate and then plot the total number of children born each year over time.
 
 ```{r}
-
+# sum of numbers
+babynames %>%
+     group_by(year) %>% 
+     summarise(total = sum(n))
+     
+# count the rows     
+babynames %>%  group_by(year) %>% 
+  tally()
+     
+     ?tally
 ```
 
 ## Your Turn 10
@@ -153,7 +188,11 @@ Use `mutate()` and `min_rank()`to rank each row in babynames from _largest_ n to
 
 ```{r}
 babynames %>% 
-  ______(rank = _______(____(prop)))
+  mutate(rank = min_rank((prop)))
+
+babynames %>% 
+  mutate(rank = min_rank(desc(prop)))  
+
 ```
 
 ## Your Turn 11
@@ -161,7 +200,10 @@ babynames %>%
 Group babynames by **year** and then re-rank the data. Filter the results to just rows where **rank == 1**.
 
 ```{r}
-
+babynames %>% 
+  group_by(year) %>% 
+  mutate(rank = min_rank(desc(prop))) %>% 
+  filter(rank ==1)
 ```
 
 ***

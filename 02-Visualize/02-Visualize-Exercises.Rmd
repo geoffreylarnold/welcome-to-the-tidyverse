@@ -6,7 +6,10 @@ title: "Visualize Data"
 
 Add a setup chunk that loads the tidyverse packages.
 
-
+# add a chunk: Ctrl+Alt+I  #
+```{r setup}
+library(tidyverse)
+```
 
 
 ```{r}
@@ -28,7 +31,16 @@ Add `color`, `size`, `alpha`, and `shape` aesthetics to your graph. Experiment.
 
 ```{r}
 ggplot(data = mpg) +
-  geom_point(mapping = aes(x = displ, y = hwy))
+  geom_point(mapping = aes(x = displ, y = hwy, color=class))
+
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, shape=class))
+
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, alpha=class))
+
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, size=class))
 ```
 
 ## Help Me
@@ -108,6 +120,8 @@ p <- ggplot(mpg) +
 
 library(plotly)
 ggplotly(p)
+
+ggsave("P", pdf)
 ```
 
 ***
