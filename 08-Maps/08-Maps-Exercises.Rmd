@@ -61,15 +61,20 @@ ggplot(data=polls, aes(color = Region)) +
 
 ```{r ggplot_map}
 # Get the boundaries of your file to get the basemap
-bbox <- st_bbox(polls)
-bbox_trans <- c(left = bbox[[1]], bottom = bbox[[2]], right = bbox[[3]], top = bbox[[4]])
-# Get the basemap
-map <- get_stamenmap(bbox_trans, maptype = "toner-lite")
+bbox <-st_bbox(polls) %>% setNames(c("left", "bottom", "right", "top"))
 
-map %>% ggmap() + 
-  coord_sf(crs = st_crs(3857)) +
-  geom_sf(data=polls, aes(color = Region), inherit.aes = FALSE) +
-  theme_map()
+# Get the API Key
+ggmap::register_stadiamaps(Sys.getenv("GGMAP_STADIAMAPS_API_KEY"))
+
+# Load API Basemap
+map <- get_stadiamap(bbox, maptype = "stamen_toner_lite")
+
+# Add map info to basemap
+map %>% 
+	ggmap() +   
+	coord_sf(crs = st_crs(3857)) +  
+	geom_sf(data=polls, aes(color = Region), inherit.aes = FALSE) +  
+	theme_map()
 ```
 
 # Leaflet
@@ -80,7 +85,7 @@ leaflet() %>%
   addProviderTiles(providers$Esri.WorldImagery)
 ```
 
-## Blank map with no warp
+## Blank map with no wrap
 
 ```{r}
 leaflet() %>%
@@ -106,9 +111,6 @@ leaflet(data = rivers) %>%
 ## Line with Popups
 
 ```{r, popups}
-rivers <- st_read("./ne_10m_rivers_lake_centerlines")
-plot(rivers)
-
 leaflet(data = rivers) %>%
   addProviderTiles("Esri.WorldTerrain", options = providerTileOptions(noWrap = TRUE)) %>%
   addPolylines(color = "#63CBD3", popup = ~name_en)
