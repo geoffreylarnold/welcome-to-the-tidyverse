@@ -1,0 +1,4 @@
+uid=COUNTY\\T#
+pwd=PASSWORD
+server=ENTSQL17.County.Allegheny.Local\\CountyStat_DW
+db=DataWarehouse
