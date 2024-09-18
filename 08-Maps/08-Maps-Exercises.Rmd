@@ -51,12 +51,14 @@ ggplot(data=cds, aes(fill = `Graduate Degree (%)`)) +
   geom_sf() +
   theme_void()
 ```
+
 ## ggplot points
 ```{r ggplot_points}
 ggplot(data=polls, aes(color = Region)) + 
   geom_sf() +
   theme_void()
 ```
+
 ## ggmap
 
 ```{r ggplot_map}

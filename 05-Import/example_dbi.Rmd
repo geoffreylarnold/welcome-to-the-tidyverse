@@ -5,40 +5,39 @@ output: html_document
 
 Note: This RMarkdown script will not knit because the connection settings are fake. It is a template you can use for other things.
 
-![](https://upload.wikimedia.org/wikipedia/commons/6/66/An_up-close_picture_of_a_curious_male_domestic_shorthair_tabby_cat.jpg)
-
-```{r setup}
+```{r}
 knitr::opts_chunk$set(echo = TRUE)
 # DBI Example
 library(DBI)
-
-# Load Credentials file
-readRenviron(".Renviron")
-
-uid <- Sys.getenv("uid")
-pwd <- Sys.getenv("pwd")
-server <- Sys.getenv("server")
-db <- Sys.getenv("db")
-
-# DB Connection String
-con <- dbConnect(odbc::odbc(), driver = "{ODBC Driver 17 for SQL Server}", server = server, database = db, UID = uid, pwd = pwd, Trusted_Connection= "yes")
+library(tidyverse)
 ```
-
 # Credential Files
 
-You should always store credentials and keys in a file as enviornmental variables
-To create a environ file type `usethis::edit_r_environ("project")`.
+You should always store credentials and keys in a file as environmental variables! *Do not* hard code them into your scripts!
+
+To create a renviron file type `usethis::edit_r_environ("project")` for a project specific file, or to edit your global environ file type `usethis::edit_r_environ()`. Global variable changes will load whenever you restart your R Session.
+
+You must also check your drivers by opening ODBC Data Sources (64-bit) and look at the Drivers tab, anything with "SQL Server" in the Name will work to connect to the Data Warehouse. If you want, you can make this an environmental variable too.
+
+```{r setup}
+readRenviron(".renviron") # Remove the string if you are using your global profile.
+
+# Set SQL Server Driver
+driver <- "{ODBC Driver 17 for SQL Server}" # Set your Driver Name based off of the Name in ODBC Data Sources
+
+# DB Connection String
+con <- dbConnect(odbc::odbc(), driver = driver, server = "DEVSQL17\\CountyStat_DW", database = "HealthCare_DataWarehouse", UID = Sys.getenv("uid"), pwd = Sys.getenv("pwd"), Trusted_Connection= "yes")
+```
 
 # Build a SQL Query and load it
 
 ```{r sql}
-
 # Build SQL Query
-sql <- "SELECT *
-FROM DB.dbo.Table"
+sql <- "Enter One of Today's Class SQL Queries Here"
 
 # Get Query
 table <- dbGetQuery(con, sql)
+table
 ```
 
 ## Disconnect from Database
@@ -47,23 +46,25 @@ table <- dbGetQuery(con, sql)
 dbDisconnect(con)
 ```
 
-# Oracle Connection
+# Oracle Connections
 
-This connection method requires rJava, follow these [instructions](9https://cimentadaj.github.io/blog/2018-05-25-installing-rjava-on-windows-10/installing-rjava-on-windows-10/)
+This connection method requires rJava, follow these [instructions](9https://cimentadaj.github.io/blog/2018-05-25-installing-rjava-on-windows-10/installing-rjava-on-windows-10/) you likely won't be able to do this yourself and will need DIT to do this for you.
 
-```{r}
+This would be necessary to install 
+
+```{r oracle_setup}
 library(RJDBC)
 
 # Build the driver using JDBC
 jdbcDriver <- JDBC(driverClass="oracle.jdbc.OracleDriver", classPath="ojdbc6.jar")
 
 # Establish the connection
-oracle <- dbConnect(jdbcDriver, "jdbc:oracle:thin:@//samedatabase:1522/schema", uid, pwd)
+oracle <- dbConnect(jdbcDriver, "jdbc:oracle:thin:@//samedatabase:1522/schema", Sys.getenv("uid"), Sys.getenv("pwd"))
 ```
 
 # Build a SQL Query and load it
 
-```{r sql}
+```{r oracle}
 
 # Build SQL Query
 sql <- "SELECT *
@@ -75,6 +76,6 @@ table <- dbGetQuery(oracle, sql)
 
 ## Disconnect from Database
 
-```{r disconnect, echo=FALSE}
+```{r disconnect_oracle, echo=FALSE}
 dbDisconnect(oracle)
 ```
