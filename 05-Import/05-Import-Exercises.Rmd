@@ -36,7 +36,13 @@ con <- dbConnect(odbc::odbc(), driver = driver, server = "DEVSQL17\\CountyStat_D
 sql <- "Enter One of Today's Class SQL Queries Here"
 
 # Get Query
-table <- dbGetQuery(con, sql)
+query <- dbGetQuery(con, sql)
+View(table)
+```
+
+```{r table}
+# Get Table
+table <- dbReadTable(con, SQL("ACHD.Health_SalesForce_Site"))
 View(table)
 ```
 
