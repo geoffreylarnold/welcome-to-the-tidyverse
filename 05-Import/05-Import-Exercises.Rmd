@@ -37,7 +37,7 @@ sql <- "Enter One of Today's Class SQL Queries Here"
 
 # Get Query
 table <- dbGetQuery(con, sql)
-table
+View(table)
 ```
 
 ## Disconnect from Database
@@ -48,7 +48,7 @@ dbDisconnect(con)
 
 # Oracle Connections
 
-This connection method requires rJava, follow these [instructions](9https://cimentadaj.github.io/blog/2018-05-25-installing-rjava-on-windows-10/installing-rjava-on-windows-10/) you likely won't be able to do this yourself and will need DIT to do this for you.
+This connection method requires rJava, follow these [instructions](https://cimentadaj.github.io/blog/2018-05-25-installing-rjava-on-windows-10/installing-rjava-on-windows-10/) you likely won't be able to do this yourself and will need DIT to do this for you.
 
 This would be necessary to install 
 
